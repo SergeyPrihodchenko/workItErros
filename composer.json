@@ -1,0 +1,21 @@
+{
+    "name": "schtirlitz/php-learn",
+    "autoload": {
+        "psr-4": {
+            "Sergo\\PHP\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sergey",
+            "email": "S.prihodchenko@yandex.ru"
+        }
+    ],
+    "require-dev": {
+        "fakerphp/faker": "^1.20",
+        "symfony/polyfill-uuid": "^1.26"
+    },
+    "require": {
+
+    }
+}
