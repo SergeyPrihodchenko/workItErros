@@ -4,8 +4,9 @@ namespace Sergo\PHP\Class\Repository;
 
 use Sergo\PHP\Class\Users\Comments;
 use Sergo\PHP\Class\UUID\UUID;
+use Sergo\PHP\interface\InterfaceRepositoryComments;
 
-class RepositoryComments {
+class RepositoryComments implements InterfaceRepositoryComments {
     public function __construct(
         private \PDO $connect
     )
