@@ -6,8 +6,9 @@ use \PDO;
 use Sergo\PHP\Class\Persone\Name;
 use Sergo\PHP\Class\Users\User;
 use Sergo\PHP\Class\UUID\UUID;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryUsers;
 
-class RepositoryUsers {
+class RepositoryUsers implements InterfaceRepositoryUsers {
 
     public function __construct(
         private PDO $connect

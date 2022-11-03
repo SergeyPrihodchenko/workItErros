@@ -2,9 +2,11 @@
 
 namespace Sergo\PHP\Class\Users;
 
+use Sergo\PHP\Interfaces\Users\InterfaceComments;
 use Sergo\PHP\Class\UUID\UUID;
 
-class Comments {
+
+class Comments implements InterfaceComments {
     public function __construct(
         private UUID $uuid,
         private UUID $idUser,

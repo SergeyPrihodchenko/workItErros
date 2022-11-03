@@ -2,9 +2,11 @@
 
 namespace Sergo\PHP\Class\Users;
 
+use Sergo\PHP\Interfaces\Users\InterfacePosts;
 use Sergo\PHP\Class\UUID\UUID;
 
-class Posts {
+
+class Posts implements InterfacePosts {
     public function __construct(
         private UUID $uuid,
         private UUID $idUser,

@@ -1,8 +1,10 @@
 <?php
 
+use Sergo\PHP\Class\Persone\Name;
 use Sergo\PHP\Class\Repository\{RepositoryComments, RepositoryUsers, RepositoryPosts};
 use Sergo\PHP\Class\Users\Comments;
 use Sergo\PHP\Class\Users\Posts;
+use Sergo\PHP\Class\Users\User;
 use Sergo\PHP\Class\UUID\UUID;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -34,5 +36,3 @@ try {
 } catch (\Throwable $th) {
     throw $th;
 }
-
-
