@@ -5,7 +5,7 @@ namespace Sergo\PHP\Class\Repository;
 use Sergo\PHP\Class\Exception\RepositoryException;
 use Sergo\PHP\Class\Users\Comments;
 use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\interfaces\Repository\InterfaceRepositoryComments;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 
 class RepositoryComments implements InterfaceRepositoryComments {
     public function __construct(

@@ -6,7 +6,7 @@ use \PDO;
 use Sergo\PHP\Class\Persone\Name;
 use Sergo\PHP\Class\Users\User;
 use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\interfaces\Repository\InterfaceRepositoryUsers;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryUsers;
 
 class RepositoryUsers implements InterfaceRepositoryUsers {
 

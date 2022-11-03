@@ -1,6 +1,6 @@
 <?php
 
-namespace Sergo\PHP\interfaces\Repository;
+namespace Sergo\PHP\Interfaces\Repository;
 
 use Sergo\PHP\Class\Users\User;
 use Sergo\PHP\Class\UUID\UUID;
