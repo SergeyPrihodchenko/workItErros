@@ -2,7 +2,7 @@
 
 namespace Sergo\PHP\Class\Persone;
 
-use Sergo\PHP\interface\InterfaceName;
+use Sergo\PHP\interfaces\Persone\InterfaceName;
 
 class Name implements InterfaceName {
     public function __construct(

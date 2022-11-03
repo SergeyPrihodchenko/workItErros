@@ -1,6 +1,6 @@
 <?php
 
-namespace Sergo\PHP\interface;
+namespace Sergo\PHP\interfaces\Persone;
 
 interface InterfaceName {
     public function first_name(): string;

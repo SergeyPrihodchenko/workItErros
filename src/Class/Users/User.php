@@ -3,8 +3,9 @@
 namespace Sergo\PHP\Class\Users;
 
 use Sergo\PHP\Class\Persone\Name;
+use Sergo\PHP\Interfaces\Users\InterfaceUsers;
 use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\interface\InterfaceUsers;
+
 
 class User implements InterfaceUsers {
     public function __construct(

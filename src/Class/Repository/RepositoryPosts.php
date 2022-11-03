@@ -5,7 +5,7 @@ namespace Sergo\PHP\Class\Repository;
 use PDO;
 use Sergo\PHP\Class\Users\Posts;
 use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\interface\InterfaceRepositoryPosts;
+use Sergo\PHP\interfaces\Repository\InterfaceRepositoryPosts;
 
 class RepositoryPosts implements InterfaceRepositoryPosts {
 

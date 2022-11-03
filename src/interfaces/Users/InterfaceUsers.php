@@ -1,6 +1,6 @@
 <?php
 
-namespace Sergo\PHP\interface;
+namespace Sergo\PHP\Interfaces\Users;
 
 interface InterfaceUsers {
 
