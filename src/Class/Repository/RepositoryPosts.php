@@ -24,6 +24,15 @@ class RepositoryPosts implements InterfaceRepositoryPosts {
         $statment->execute([':uuid' => $post->uuid(), ':author_uuid' => $post->idUser(), 'title' => $post->title(), 'text' => $post->text()]);
     }
 
+    public function delete(UUID $uuid): void
+    {
+        $connection = $this->connect;
+
+        $statement = $connection->prepare("DELETE FROM posts WHERE uuid = :uuid;");
+
+        $statement->execute([':uuid' => $uuid]);
+    }
+
     public function getByUUIDinPosts(UUID $uuid): Posts 
     {
         $connection = $this->connect;

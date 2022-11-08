@@ -9,6 +9,8 @@ interface InterfaceRepositoryPosts {
 
     public function save(Posts $post): void;
 
+    public function delete(UUID $uuid): void;
+
     public function getByUUIDinPosts(UUID $uuid): Posts;
 
 }
