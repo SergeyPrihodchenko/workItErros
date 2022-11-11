@@ -9,8 +9,6 @@ use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\Repository\RepositoryComments;
 use Sergo\PHP\Class\Repository\RepositoryPosts;
 use Sergo\PHP\Class\Repository\RepositoryUsers;
-use Sergo\PHP\Class\Users\Posts;
-use Sergo\PHP\Class\UUID\UUID;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

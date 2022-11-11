@@ -7,6 +7,7 @@ use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
+use Sergo\PHP\Class\UUID\UUID;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryPosts;
 
@@ -29,7 +30,7 @@ class deletePost implements InterfaceAction {
         }
 
         try {
-            $this->repository->delete($uuid);
+            $this->repository->delete(new UUID($uuid));
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
