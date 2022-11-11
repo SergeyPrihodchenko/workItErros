@@ -1,5 +1,5 @@
 <?php
-namespace Sergo\PHP\tests;
+namespace tests\action;
 
 use PDO;
 use PDOStatement;
@@ -13,8 +13,6 @@ use Sergo\PHP\Class\Users\Comments;
 use Sergo\PHP\Class\Users\Posts;
 use Sergo\PHP\Class\Users\User;
 use Sergo\PHP\Class\UUID\UUID;
-
-use function PHPUnit\Framework\once;
 
 class RepositoryTest extends TestCase
 {

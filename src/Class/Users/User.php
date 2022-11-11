@@ -2,15 +2,14 @@
 
 namespace Sergo\PHP\Class\Users;
 
-use Sergo\PHP\Class\Persone\Name;
 use Sergo\PHP\Interfaces\Users\InterfaceUsers;
 use Sergo\PHP\Class\UUID\UUID;
-
+use Sergo\PHP\interfaces\Persone\InterfaceName;
 
 class User implements InterfaceUsers {
     public function __construct(
         private UUID $uuid,
-        private Name $name
+        private InterfaceName $name
     )
     {
         

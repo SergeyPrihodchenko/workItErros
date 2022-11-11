@@ -7,13 +7,13 @@ use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
-use Sergo\PHP\Class\Repository\RepositoryPosts;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryPosts;
 
 class deletePost implements InterfaceAction {
 
     public function __construct(
-        private RepositoryPosts $repository
+        private InterfaceRepositoryPosts $repository
     )
     {
     }

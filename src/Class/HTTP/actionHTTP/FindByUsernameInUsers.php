@@ -8,13 +8,13 @@ use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
-use Sergo\PHP\Class\Repository\RepositoryUsers;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryUsers;
 
 class FindByUsernameInUsers implements InterfaceAction
 {
     public function __construct(
-        private RepositoryUsers $repositoryUsers
+        private InterfaceRepositoryUsers $repositoryUsers
     )
     {
     }
