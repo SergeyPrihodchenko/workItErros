@@ -7,15 +7,15 @@ use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
-use Sergo\PHP\Class\Repository\RepositoryComments;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
 use Sergo\PHP\Class\Users\Comments;
 use Sergo\PHP\Class\UUID\UUID;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 
-class addComments implements InterfaceAction {
+class AddComments implements InterfaceAction {
 
     public function __construct(
-        private RepositoryComments $repository
+        private InterfaceRepositoryComments $repository
     )
     {
     }
