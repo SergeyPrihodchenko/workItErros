@@ -7,36 +7,43 @@ use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
-use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
-use Sergo\PHP\Class\Users\Comments;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
+use Sergo\PHP\Class\Users\Like;
 use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
+use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
 
-class AddComments implements InterfaceAction {
+class AddLike implements InterfaceAction {
 
     public function __construct(
-        private InterfaceRepositoryComments $repository
+        private InterfaceRepositoryLikes $repositoryLikes
     )
     {
+        
     }
 
     public function handle(Request $request): Response
     {
-
         try {
-            $author_uuid = trim($request->jsonBodyFind('author_uuid'));
-            $post_uuid = trim($request->jsonBodyFind('post_uuid'));
-            $text = trim($request->jsonBodyFind('text'));
+            $postuuid = $request->query('postuuid');
+            $useruuid = $request->query('useruuid');
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $this->repository->save(new Comments(UUID::random(), new UUID($author_uuid), new UUID($post_uuid), $text));
+            $like = new Like(
+                UUID::random(),
+                new UUID($postuuid),
+                new UUID($useruuid)
+            );
+
+            $this->repositoryLikes->save($like);
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
-        return new SuccessfulResponse(['text' => $text]);
+        return new SuccessfulResponse([
+            'uuid' => $like->UUID()
+        ]);
     }
 }

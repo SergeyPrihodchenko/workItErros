@@ -8,35 +8,31 @@ use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
-use Sergo\PHP\Class\Users\Comments;
-use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
 
-class AddComments implements InterfaceAction {
+class FindByUUIDInLikes implements InterfaceAction {
 
     public function __construct(
-        private InterfaceRepositoryComments $repository
+        private InterfaceRepositoryLikes $repository
     )
     {
+        
     }
 
     public function handle(Request $request): Response
     {
-
         try {
-            $author_uuid = trim($request->jsonBodyFind('author_uuid'));
-            $post_uuid = trim($request->jsonBodyFind('post_uuid'));
-            $text = trim($request->jsonBodyFind('text'));
+            $uuid = $request->query('uuid');
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $this->repository->save(new Comments(UUID::random(), new UUID($author_uuid), new UUID($post_uuid), $text));
+            $liks = $this->repository->getByPostUuid($uuid);
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
-        return new SuccessfulResponse(['text' => $text]);
+        return new SuccessfulResponse(['likes' => $liks]);
     }
 }
