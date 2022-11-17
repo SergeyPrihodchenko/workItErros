@@ -3,14 +3,12 @@
     "autoload": {
         "psr-4": {
             "Sergo\\PHP\\": "src/"
-        },
-        
-        "autoload-dev": {
-            "psr-4": {
-            "Sergo\\PHP\\phpunit\\": "tests/"
-            }
-            }
-            
+        }      
+    },
+    "autoload-dev": {
+        "psr-4": {
+        "Sergo\\PHP\\phpunit\\": "tests/"
+        }
     },
     "authors": [
         {
@@ -25,5 +23,8 @@
     },
     "scripts": {
         "test": "phpunit tests --testdox --color"
+    },
+    "require": {
+        "psr/container": "^2.0"
     }
 }
