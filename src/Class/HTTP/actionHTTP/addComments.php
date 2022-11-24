@@ -24,9 +24,9 @@ class AddComments implements InterfaceAction {
     {
 
         try {
-            $author_uuid = trim($request->jsonBodyFind('author_uuid'));
-            $post_uuid = trim($request->jsonBodyFind('post_uuid'));
-            $text = trim($request->jsonBodyFind('text'));
+            $author_uuid = trim($request->jsonBodyField('author_uuid'));
+            $post_uuid = trim($request->jsonBodyField('post_uuid'));
+            $text = trim($request->jsonBodyField('text'));
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }

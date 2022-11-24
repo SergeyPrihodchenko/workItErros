@@ -3,7 +3,7 @@
 namespace Sergo\PHP\Class\HTTP\Request;
 
 use JsonException;
-use Sergo\PHP\Class\Exception\HttpException;
+use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\interfaces\HTTP\Request\InterfaceRequest;
 
 class Request implements InterfaceRequest {
@@ -47,7 +47,7 @@ class Request implements InterfaceRequest {
         return $this->server['REQUEST_METHOD'];
     }
 
-    public function jsonBodyFind(string $field): mixed
+    public function jsonBodyField(string $field): mixed
     {
         $data = $this->jsonBody();
 

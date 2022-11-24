@@ -2,14 +2,16 @@
 
 namespace Sergo\PHP\Class\Repository;
 
-use Sergo\PHP\Class\Exception\RepositoryException;
+use Psr\Log\LoggerInterface;
+use Sergo\PHP\Class\Exceptions\RepositoryException;
 use Sergo\PHP\Class\Users\Comments;
 use Sergo\PHP\Class\UUID\UUID;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 
 class RepositoryComments implements InterfaceRepositoryComments {
     public function __construct(
-        private \PDO $connect
+        private \PDO $connect,
+        private LoggerInterface $logger
     )
     {
     }
@@ -17,15 +19,11 @@ class RepositoryComments implements InterfaceRepositoryComments {
     public function save(Comments $comment): void 
     {
         $connection = $this->connect;
+        $uuid = $comment->uuid();
+        $statement = $connection->prepare("INSERT INTO comments (uuid, post_uuid, author_uuid, text) VALUES (:uuid, :post_uuid, :author_uuid, :text);");
 
-        try {
-            $statement = $connection->prepare("INSERT INTO comments (uuid, post_uuid, author_uuid, text) VALUES (:uuid, :post_uuid, :author_uuid, :text);");
-
-            $statement->execute([':uuid' => $comment->uuid(), ':post_uuid' => $comment->idPost(), ':author_uuid' => $comment->idUser(), ':text' => $comment->text()]);
-
-        } catch (RepositoryException $th) {
-            throw $th->getMessage();
-        }
+        $statement->execute([':uuid' => $comment->uuid(), ':post_uuid' => $comment->idPost(), ':author_uuid' => $comment->idUser(), ':text' => $comment->text()]);
+        $this->logger->info("Create comment UUID:$uuid");
     }
 
     public function getByUUIDinComments($uuid): Comments
@@ -43,7 +41,8 @@ class RepositoryComments implements InterfaceRepositoryComments {
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
 
         if($result === false) {
-            throw new RepositoryException('**********No such element');
+            $this->logger->warning("No such element");
+            throw new RepositoryException('No such element');
         }
         return new Comments(
             new UUID($result['uuid']),
