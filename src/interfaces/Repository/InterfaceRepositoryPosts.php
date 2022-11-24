@@ -13,4 +13,6 @@ interface InterfaceRepositoryPosts {
 
     public function getByUUIDinPosts(UUID $uuid): Posts;
 
+    public function getByUuidAuthorInPosts(UUID $uuid): Posts;
+
 }

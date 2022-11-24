@@ -25,6 +25,8 @@
         "test": "phpunit tests --testdox --color"
     },
     "require": {
-        "psr/container": "^2.0"
+        "psr/container": "^2.0",
+        "monolog/monolog": "^3.2",
+        "vlucas/phpdotenv": "^5.5"
     }
 }
