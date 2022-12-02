@@ -5,12 +5,17 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Sergo\PHP\Class\Authentification\JsonBodyUsernameIdentification;
 use Sergo\PHP\Class\Authentification\JsonBodyUuidIdentification;
+use Sergo\PHP\Class\Authentification\PasswordAuthentification;
 use Sergo\PHP\Class\Container\DIContainer;
+use Sergo\PHP\Class\Repository\RepositoryAuthTokens;
 use Sergo\PHP\Class\Repository\RepositoryComments;
 use Sergo\PHP\Class\Repository\RepositoryLikes;
 use Sergo\PHP\Class\Repository\RepositoryPosts;
 use Sergo\PHP\Class\Repository\RepositoryUsers;
-use Sergo\PHP\Interfaces\Authentication\InterfaceIdentification;
+use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
+use Sergo\PHP\Interfaces\Authentification\InterfaceIdentification;
+use Sergo\PHP\Interfaces\Authentification\InterfacePasswordAuthentification;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryAuthToken;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryPosts;
@@ -44,6 +49,19 @@ if('yes' === $_SERVER['LOG_TO_CONSOLE']) {
 $container->bind(
     LoggerInterface::class,
     $logger
+);
+
+// $container->bind(
+//     InterfaceAuthentification::class,
+//     PasswordAuthentification::class
+// );
+$container->bind(
+    InterfacePasswordAuthentification::class,
+    PasswordAuthentification::class
+);
+$container->bind(
+    InterfaceRepositoryAuthToken::class,
+    RepositoryAuthTokens::class
 );
 
 $container->bind(

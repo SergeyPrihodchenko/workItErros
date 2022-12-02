@@ -2,7 +2,7 @@
 
 namespace Sergo\PHP\Class\UUID;
 
-use Sergo\PHP\Class\Exception\InvalidArgumentException;
+use Sergo\PHP\Class\Exceptions\InvalidArgumentException;
 
 class UUID {
     public function __construct(

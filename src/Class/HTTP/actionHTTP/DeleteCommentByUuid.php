@@ -4,22 +4,21 @@ namespace Sergo\PHP\Class\HTTP\actionHTTP;
 
 use Sergo\PHP\Class\Exceptions\AuthException;
 use Sergo\PHP\Class\Exceptions\HttpException;
+use Sergo\PHP\Class\Exceptions\RepositoryException;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
-use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
-use Sergo\PHP\Class\Users\Like;
 use Sergo\PHP\Class\UUID\UUID;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 
-class AddLike implements InterfaceAction {
+class DeleteCommentByUuid implements InterfaceAction {
 
     public function __construct(
-        private InterfaceRepositoryLikes $repositoryLikes
+        private InterfaceRepositoryComments $repository
     )
     {
-        
     }
 
     public function handle(Request $request): Response
@@ -33,26 +32,17 @@ class AddLike implements InterfaceAction {
         }
 
         try {
-            $postuuid = trim($request->query('postuuid'));
-            $useruuid = trim($request->query('useruuid'));
+            $uuid = trim($request->jsonBodyField('comment_uuid'));
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $like = new Like(
-                UUID::random(),
-                new UUID($postuuid),
-                new UUID($useruuid)
-            );
-
-            $this->repositoryLikes->save($like);
+            $this->repository->delete($uuid);
         } catch (HttpException $e) {
-            return new ErrorResponse($e->getMessage());
+            throw new RepositoryException($e->getMessage());
         }
 
-        return new SuccessfulResponse([
-            'uuid' => $like->UUID()
-        ]);
+        return new SuccessfulResponse(['message' => "delete commest by UUID: $uuid"]);
     }
 }

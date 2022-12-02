@@ -17,7 +17,7 @@ class Posts implements InterfacePosts {
         
     }
 
-    public function uuid(): UUID
+    public function uuid(): string
     {
         return $this->uuid;
     }

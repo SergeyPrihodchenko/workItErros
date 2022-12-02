@@ -1,15 +1,15 @@
 <?php
 
-namespace Sergo\PHP\Class\Authentification;
+namespace Sergo\PHP\Class\Authentication;
 
 use Sergo\PHP\Class\Exceptions\AuthException;
 use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\Users\User;
-use Sergo\PHP\Interfaces\Authentication\InterfaceIdentification;
+use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryUsers;
 
-class JsonBodyUsernameIdentification implements InterfaceIdentification {
+class JsonBodyUsernameIdentification implements InterfaceAuthentification {
 
 
     public function __construct(

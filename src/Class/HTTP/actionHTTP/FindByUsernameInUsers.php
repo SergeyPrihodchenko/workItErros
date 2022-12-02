@@ -2,8 +2,8 @@
 
 namespace Sergo\PHP\Class\HTTP\actionHTTP;
 
-use Sergo\PHP\Class\Exception\HttpException;
-use Sergo\PHP\Class\Exception\UserNotFoundException;
+use Sergo\PHP\Class\Exceptions\HttpException;
+use Sergo\PHP\Class\Exceptions\UserNotFoundException;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
@@ -23,7 +23,7 @@ class FindByUsernameInUsers implements InterfaceAction
     {
         try {
 
-            $username = $request->query('username');
+            $username = trim($request->query('username'));
 
         } catch (HttpException $e) {
 
