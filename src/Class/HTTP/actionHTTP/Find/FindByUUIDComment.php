@@ -1,8 +1,7 @@
 <?php
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\Class\HTTP\actionHTTP\Find;
 
-use Sergo\PHP\Class\Exceptions\AuthException;
 use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\Class\Exceptions\RepositoryException;
 use Sergo\PHP\Class\HTTP\Request\Request;
@@ -10,37 +9,34 @@ use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
-use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 
-class DeleteLikeByUuid implements InterfaceAction {
+class FindByUUIDComment implements InterfaceAction {
 
     public function __construct(
-        private InterfaceRepositoryLikes $repository
+        private InterfaceRepositoryComments $repository
     )
-    {   
+    {
+        
     }
 
     public function handle(Request $request): Response
     {
         try {
-            $author = $this->Authentification->user($request);
-        } catch (AuthException $e) {
-            $this->logger->error('Not found user');
-            return new ErrorResponse($e->getMessage());
-        }
+            $uuid = trim($request->jsonBodyField('comment_uuid'));
 
-        try {
-            $uuid = trim($request->jsonBodyField('like_uuid'));
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $this->repository->delete($uuid);
+
+            $comment = $this->repository->getByUUIDinComments($uuid);
+
         } catch (HttpException $e) {
             throw new RepositoryException($e->getMessage());
         }
 
-        return new SuccessfulResponse(['message' => "delete like by uuid: $uuid"]);
+        return new SuccessfulResponse(["uuid" => $comment->uuid()]);
     }
 }

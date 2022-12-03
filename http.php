@@ -2,19 +2,19 @@
 
 use Psr\Log\LoggerInterface;
 use Sergo\PHP\Class\Exceptions\HttpException;
-use Sergo\PHP\Class\HTTP\actionHTTP\AddComments;
-use Sergo\PHP\Class\HTTP\actionHTTP\AddLike;
-use Sergo\PHP\Class\HTTP\actionHTTP\AddPost;
-use Sergo\PHP\Class\HTTP\actionHTTP\AddUser;
-use Sergo\PHP\Class\HTTP\actionHTTP\DeleteCommentByUuid;
-use Sergo\PHP\Class\HTTP\actionHTTP\DeleteLikeByUuid;
-use Sergo\PHP\class\HTTP\actionHTTP\DeletePostByUuid;
-use Sergo\PHP\Class\HTTP\actionHTTP\DeleteUserByUuid;
-use Sergo\PHP\Class\HTTP\actionHTTP\FindByUsernameInUsers;
-use Sergo\PHP\Class\HTTP\actionHTTP\FindByUUIDComment;
-use Sergo\PHP\Class\HTTP\actionHTTP\FindByUUIDInLikes;
-use Sergo\PHP\Class\HTTP\actionHTTP\FindByUUIDinPosts;
-use Sergo\PHP\Class\HTTP\actionHTTP\LogIn;
+use Sergo\PHP\Class\HTTP\actionHTTP\Create\AddComments;
+use Sergo\PHP\Class\HTTP\actionHTTP\Create\AddLike;
+use Sergo\PHP\Class\HTTP\actionHTTP\Create\AddPost;
+use Sergo\PHP\Class\HTTP\actionHTTP\Create\AddUser;
+use Sergo\PHP\Class\HTTP\actionHTTP\Delete\DeleteCommentByUuid;
+use Sergo\PHP\Class\HTTP\actionHTTP\Delete\DeleteLikeByUuid;
+use Sergo\PHP\class\HTTP\actionHTTP\Delete\DeletePostByUuid;
+use Sergo\PHP\Class\HTTP\actionHTTP\Delete\DeleteUserByUuid;
+use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUsernameInUsers;
+use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUUIDComment;
+use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUUIDInLikes;
+use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUUIDinPosts;
+use Sergo\PHP\Class\HTTP\actionHTTP\Token\LogIn;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 

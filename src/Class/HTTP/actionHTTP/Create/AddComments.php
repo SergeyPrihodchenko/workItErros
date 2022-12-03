@@ -1,22 +1,28 @@
 <?php
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\Class\HTTP\actionHTTP\Create;
 
+use Psr\Log\LoggerInterface;
 use Sergo\PHP\Class\Exceptions\AuthException;
 use Sergo\PHP\Class\Exceptions\HttpException;
-use Sergo\PHP\Class\Exceptions\RepositoryException;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
-use Sergo\PHP\Class\UUID\UUID;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
+use Sergo\PHP\Class\Users\Comments;
+use Sergo\PHP\Class\UUID\UUID;
+use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
+use Sergo\PHP\Interfaces\Authentification\InterfaceTokenAuthentification;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 
-class DeleteCommentByUuid implements InterfaceAction {
+class AddComments implements InterfaceAction {
 
     public function __construct(
-        private InterfaceRepositoryComments $repository
+        private InterfaceRepositoryComments $repository,
+        private LoggerInterface $logger,
+        private InterfaceTokenAuthentification $Authentification
+
     )
     {
     }
@@ -32,17 +38,19 @@ class DeleteCommentByUuid implements InterfaceAction {
         }
 
         try {
-            $uuid = trim($request->jsonBodyField('comment_uuid'));
+            $author_uuid = trim($request->jsonBodyField('author_uuid'));
+            $post_uuid = trim($request->jsonBodyField('post_uuid'));
+            $text = trim($request->jsonBodyField('text'));
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $this->repository->delete($uuid);
+            $this->repository->save(new Comments(UUID::random(), new UUID($author_uuid), new UUID($post_uuid), $text));
         } catch (HttpException $e) {
-            throw new RepositoryException($e->getMessage());
+            return new ErrorResponse($e->getMessage());
         }
 
-        return new SuccessfulResponse(['message' => "delete commest by UUID: $uuid"]);
+        return new SuccessfulResponse(['text' => $text]);
     }
 }

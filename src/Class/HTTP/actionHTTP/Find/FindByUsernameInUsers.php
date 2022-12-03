@@ -1,20 +1,20 @@
 <?php
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\Class\HTTP\actionHTTP\Find;
 
 use Sergo\PHP\Class\Exceptions\HttpException;
+use Sergo\PHP\Class\Exceptions\UserNotFoundException;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
-use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryPosts;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryUsers;
 
-class FindByUUIDinPosts implements InterfaceAction {
-
+class FindByUsernameInUsers implements InterfaceAction
+{
     public function __construct(
-        private InterfaceRepositoryPosts $repository
+        private InterfaceRepositoryUsers $repositoryUsers
     )
     {
     }
@@ -23,26 +23,27 @@ class FindByUUIDinPosts implements InterfaceAction {
     {
         try {
 
-            $uuid = trim($request->query('uuid'));
-            
+            $username = trim($request->query('username'));
+
         } catch (HttpException $e) {
-            
-            return new ErrorResponse($e->getMessage());
+
+            return new ErrorResponse(($e->getMessage()));
+
         }
 
         try {
 
-            $post = $this->repository->getByUUIDinPosts(new UUID($uuid));
+            $user = $this->repositoryUsers->getByUsernameInUsers($username);
 
-        } catch (HttpException $e) {
+        } catch (UserNotFoundException $e) {
 
             return new ErrorResponse($e->getMessage());
 
         }
 
         return new SuccessfulResponse([
-            'author_uuid' => $post->uuid(),
-            'text' => $post->text()
+            'username' => $user->full_name(),
+            'name' => $user->first_name()
         ]);
     }
 }

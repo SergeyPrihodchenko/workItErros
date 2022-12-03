@@ -1,8 +1,7 @@
 <?php
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\class\HTTP\actionHTTP\Delete;
 
-use Psr\Log\LoggerInterface;
 use Sergo\PHP\Class\Exceptions\AuthException;
 use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\Class\HTTP\Request\Request;
@@ -10,18 +9,12 @@ use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
 use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
-use Sergo\PHP\Class\Users\Comments;
-use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
-use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
+use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryPosts;
 
-class AddComments implements InterfaceAction {
+class DeletePostByUuid implements InterfaceAction {
 
     public function __construct(
-        private InterfaceRepositoryComments $repository,
-        private LoggerInterface $logger,
-        private InterfaceAuthentification $Authentification
-
+        private InterfaceRepositoryPosts $repository
     )
     {
     }
@@ -37,19 +30,19 @@ class AddComments implements InterfaceAction {
         }
 
         try {
-            $author_uuid = trim($request->jsonBodyField('author_uuid'));
-            $post_uuid = trim($request->jsonBodyField('post_uuid'));
-            $text = trim($request->jsonBodyField('text'));
+            if($request->method() === 'DELETE') {
+                $uuid = trim($request->query('uuid'));
+            }
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $this->repository->save(new Comments(UUID::random(), new UUID($author_uuid), new UUID($post_uuid), $text));
+            $this->repository->delete($uuid);
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
-        return new SuccessfulResponse(['text' => $text]);
+        return new SuccessfulResponse(['message' => 'Post deleted']);
     }
 }

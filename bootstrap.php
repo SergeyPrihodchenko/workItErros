@@ -7,6 +7,7 @@ use Sergo\PHP\Class\Authentification\JsonBodyUsernameIdentification;
 use Sergo\PHP\Class\Authentification\JsonBodyUuidIdentification;
 use Sergo\PHP\Class\Authentification\PasswordAuthentification;
 use Sergo\PHP\Class\Container\DIContainer;
+use Sergo\PHP\Class\HTTP\actionHTTP\Token\BearerTokenAuthentification;
 use Sergo\PHP\Class\Repository\RepositoryAuthTokens;
 use Sergo\PHP\Class\Repository\RepositoryComments;
 use Sergo\PHP\Class\Repository\RepositoryLikes;
@@ -15,6 +16,7 @@ use Sergo\PHP\Class\Repository\RepositoryUsers;
 use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
 use Sergo\PHP\Interfaces\Authentification\InterfaceIdentification;
 use Sergo\PHP\Interfaces\Authentification\InterfacePasswordAuthentification;
+use Sergo\PHP\Interfaces\Authentification\InterfaceTokenAuthentification;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryAuthToken;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryComments;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
@@ -51,14 +53,22 @@ $container->bind(
     $logger
 );
 
-// $container->bind(
-//     InterfaceAuthentification::class,
-//     PasswordAuthentification::class
-// );
+$container->bind(
+    InterfaceAuthentification::class,
+    PasswordAuthentification::class
+);
+
+
 $container->bind(
     InterfacePasswordAuthentification::class,
     PasswordAuthentification::class
 );
+
+$container->bind(
+    InterfaceTokenAuthentification::class,
+    BearerTokenAuthentification::class
+);
+
 $container->bind(
     InterfaceRepositoryAuthToken::class,
     RepositoryAuthTokens::class

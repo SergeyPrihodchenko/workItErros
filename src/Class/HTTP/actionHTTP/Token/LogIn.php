@@ -1,6 +1,6 @@
 <?php 
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\Class\HTTP\actionHTTP\Token;
 
 use DateTimeImmutable;
 use Sergo\PHP\Class\Authentification\AuthToken;

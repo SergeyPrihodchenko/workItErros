@@ -1,6 +1,6 @@
 <?php
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\Class\HTTP\actionHTTP\Delete;
 
 use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\Class\Exceptions\RepositoryException;
