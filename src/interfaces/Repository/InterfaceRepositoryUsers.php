@@ -9,6 +9,8 @@ interface InterfaceRepositoryUsers {
 
     public function save(User $user): void;
 
+    public function delete(string $uuid): void;
+
     public function getByUsernameInUsers(string $username): User;
 
     public function getByUUIDInUsers(UUID $uuid): User;

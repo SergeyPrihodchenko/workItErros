@@ -39,6 +39,13 @@ class RepositoryLikes implements InterfaceRepositoryLikes {
         }
     }
 
+    public function delete($uuid): void {
+
+        $statement = $this->connect->prepare("DELETE FROM likes WHERE uuid = :uuid");
+        $statement->execute([':uuid' => $uuid]);
+        $this->logger->info("delete like UUID:$uuid");
+    }
+
     public function getByPostUuid(string $uuid): array 
     {
 

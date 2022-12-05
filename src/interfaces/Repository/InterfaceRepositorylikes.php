@@ -9,4 +9,6 @@ interface InterfaceRepositoryLikes
     public function save(Like $like): void;
 
     public function getByPostUuid(string $uuid): array;
+
+    public function delete(string $uuid): void;
 }

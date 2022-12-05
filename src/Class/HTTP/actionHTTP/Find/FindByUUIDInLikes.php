@@ -1,8 +1,8 @@
 <?php
 
-namespace Sergo\PHP\Class\HTTP\actionHTTP;
+namespace Sergo\PHP\Class\HTTP\actionHTTP\Find;
 
-use Sergo\PHP\Class\Exception\HttpException;
+use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 use Sergo\PHP\Class\HTTP\Response\Response;
@@ -22,7 +22,7 @@ class FindByUUIDInLikes implements InterfaceAction {
     public function handle(Request $request): Response
     {
         try {
-            $uuid = $request->query('uuid');
+            $uuid = trim($request->query('uuid'));
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }

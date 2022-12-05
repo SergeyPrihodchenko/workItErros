@@ -28,7 +28,7 @@ class RepositoryPosts implements InterfaceRepositoryPosts {
         $this->logger->info("Create post UUID:$uuid");
     }
 
-    public function delete(UUID $uuid): void
+    public function delete(string $uuid): void
     {
         $connection = $this->connect;
 

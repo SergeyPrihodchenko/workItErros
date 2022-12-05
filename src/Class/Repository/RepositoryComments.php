@@ -26,6 +26,19 @@ class RepositoryComments implements InterfaceRepositoryComments {
         $this->logger->info("Create comment UUID:$uuid");
     }
 
+    public function delete(string $uuid): void {
+
+        try {
+            $statement = $this->connect->prepare("DELETE from comments WHERE uuid = :uuid");
+            $statement->execute([':uuid' => $uuid]);
+            $statement->fetch();
+            $this->logger->info("Delete comment UUID: $uuid");
+        } catch (RepositoryException $e) {
+            $error = $e->getMessage();
+            $this->logger->info("Not found UUID comments:$uuid \n $error");
+        }
+    }
+
     public function getByUUIDinComments($uuid): Comments
     {
         $connection = $this->connect;
