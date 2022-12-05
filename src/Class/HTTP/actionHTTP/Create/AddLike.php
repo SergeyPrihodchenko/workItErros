@@ -2,6 +2,7 @@
 
 namespace Sergo\PHP\Class\HTTP\actionHTTP\Create;
 
+use Psr\Log\LoggerInterface;
 use Sergo\PHP\Class\Exceptions\AuthException;
 use Sergo\PHP\Class\Exceptions\HttpException;
 use Sergo\PHP\Class\HTTP\Request\Request;
@@ -11,15 +12,17 @@ use Sergo\PHP\Class\HTTP\Response\SuccessfulResponse;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryLikes;
 use Sergo\PHP\Class\Users\Like;
 use Sergo\PHP\Class\UUID\UUID;
+use Sergo\PHP\Interfaces\Authentification\InterfaceTokenAuthentification;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
 
-class AddLike implements InterfaceAction {
+class AddLike implements InterfaceAction
+{
 
     public function __construct(
-        private InterfaceRepositoryLikes $repositoryLikes
-    )
-    {
-        
+        private InterfaceRepositoryLikes $repositoryLikes,
+        private InterfaceTokenAuthentification $Authentification,
+        private LoggerInterface $logger
+    ) {
     }
 
     public function handle(Request $request): Response
@@ -33,8 +36,8 @@ class AddLike implements InterfaceAction {
         }
 
         try {
-            $postuuid = trim($request->query('postuuid'));
-            $useruuid = trim($request->query('useruuid'));
+            $postuuid = trim($request->jsonBodyField('post_uuid'));
+            $useruuid = trim($author->uuid());
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }

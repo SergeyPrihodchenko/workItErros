@@ -31,21 +31,21 @@ $container = new DIContainer();
 
 $logger = (new Logger('blog'));
 
-if('yes' === $_SERVER['LOG_TO_FILES']) {
+if ('yes' === $_SERVER['LOG_TO_FILES']) {
     $logger
-    ->pushHandler(new StreamHandler(__DIR__ . '/logs/blog.log'))
-    ->pushHandler(new StreamHandler(
-        __DIR__ . '/logs/blog.error.log',
-        level: Logger::ERROR,
-        bubble: false
-    ));
+        ->pushHandler(new StreamHandler(__DIR__ . '/logs/blog.log'))
+        ->pushHandler(new StreamHandler(
+            __DIR__ . '/logs/blog.error.log',
+            level: Logger::ERROR,
+            bubble: false
+        ));
 }
 
-if('yes' === $_SERVER['LOG_TO_CONSOLE']) {
+if ('yes' === $_SERVER['LOG_TO_CONSOLE']) {
     $logger
-   ->pushHandler(
-    new StreamHandler("php://stdout")
-   );
+        ->pushHandler(
+            new StreamHandler("php://stdout")
+        );
 }
 
 $container->bind(
@@ -53,10 +53,10 @@ $container->bind(
     $logger
 );
 
-$container->bind(
-    InterfaceAuthentification::class,
-    PasswordAuthentification::class
-);
+// $container->bind(
+//     InterfaceAuthentification::class,
+//     PasswordAuthentification::class
+// );
 
 
 $container->bind(
@@ -85,11 +85,11 @@ $container->bind(
 );
 $container->bind(
     InterfaceIdentification::class,
-    JsonBodyUuidIdentification::class 
+    JsonBodyUuidIdentification::class
 );
 $container->bind(
     InterfaceIdentification::class,
-    JsonBodyUsernameIdentification::class 
+    JsonBodyUsernameIdentification::class
 );
 $container->bind(
     InterfacerepositoryPosts::class,

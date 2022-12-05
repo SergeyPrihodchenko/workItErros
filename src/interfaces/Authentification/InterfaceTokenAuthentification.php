@@ -2,6 +2,8 @@
 
 namespace Sergo\PHP\Interfaces\Authentification;
 
-interface InterfaceTokenAuthentification extends InterfaceAuthentification {
-    
+use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
+
+interface InterfaceTokenAuthentification extends InterfaceAuthentification
+{
 }

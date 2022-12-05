@@ -12,15 +12,15 @@ use Sergo\PHP\Interfaces\Authentification\InterfaceTokenAuthentification;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryAuthToken;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryUsers;
 
-class BearerTokenAuthentification implements InterfaceTokenAuthentification {
+class BearerTokenAuthentification implements InterfaceTokenAuthentification
+{
 
     private const HEADER_PREFIX = 'Bearer';
 
     public function __construct(
         private InterfaceRepositoryAuthToken $repoToken,
         private InterfaceRepositoryUsers $repoUsers
-    )
-    {
+    ) {
     }
 
     public function user(Request $request): User
@@ -31,7 +31,7 @@ class BearerTokenAuthentification implements InterfaceTokenAuthentification {
             throw new AuthException($e->getMessage());
         }
 
-        if(!str_starts_with($header, self::HEADER_PREFIX)) {
+        if (!str_starts_with($header, self::HEADER_PREFIX)) {
             throw new AuthException("Malformed token: [$header]");
         }
 
@@ -40,7 +40,7 @@ class BearerTokenAuthentification implements InterfaceTokenAuthentification {
         try {
             $authToken = $this->repoToken->get($token);
         } catch (AuthTokenNotFoundException) {
-            throw new AuthException("Token expired: [$token]");
+            throw new AuthException("Bad token: [$token]");
         }
 
         if ($authToken->expiresOn() <= new DateTimeImmutable()) {

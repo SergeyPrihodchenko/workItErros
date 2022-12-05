@@ -2,8 +2,10 @@
 
 namespace Sergo\PHP\Class\Repository;
 
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use Exception;
 use PDO;
 use PDOException;
@@ -13,12 +15,12 @@ use Sergo\PHP\Class\Exceptions\AuthTokenRepositoryException;
 use Sergo\PHP\Class\UUID\UUID;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryAuthToken;
 
-class RepositoryAuthTokens implements InterfaceRepositoryAuthToken {
+class RepositoryAuthTokens implements InterfaceRepositoryAuthToken
+{
 
     public function __construct(
-        private \PDO $connection 
-    )
-    {
+        private \PDO $connection
+    ) {
     }
 
     public function save(AuthToken $authToken): void
@@ -46,17 +48,19 @@ class RepositoryAuthTokens implements InterfaceRepositoryAuthToken {
             ]);
         } catch (PDOException $e) {
             throw new AuthTokenRepositoryException(
-                $e->getMessage(), (int)$e->getCode, $e
+                $e->getMessage(),
+                (int)$e->getCode,
+                $e
             );
         }
     }
 
     public function get(string $token): AuthToken
     {
-        
+
         try {
             $statement = $this->connection->prepare(
-                'SELECT * FROM tokents WHERE = ?;'
+                "SELECT * FROM tokens WHERE token = ?;"
             );
             $statement->execute([$token]);
             $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -64,7 +68,7 @@ class RepositoryAuthTokens implements InterfaceRepositoryAuthToken {
             throw new AuthTokenRepositoryException($e->getMessage(), (int)$e->getCode(), $e);
         }
 
-        if(false === $result) {
+        if (false === $result) {
             throw new AuthTokenNotFoundException("Cannot find token: $token");
         }
 
@@ -75,8 +79,18 @@ class RepositoryAuthTokens implements InterfaceRepositoryAuthToken {
                 new DateTimeImmutable($result['expires_on'])
             );
         } catch (Exception $e) {
-            throw new AuthTokenRepositoryException($e->getMessage(),
-            $e->getCode(), $e);
+            throw new AuthTokenRepositoryException(
+                $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
         }
+    }
+
+    public function update(string $token): void
+    {
+        $date = (new DateTimeImmutable('', new DateTimeZone("Europe/Moscow")))->format(DateTime::ATOM);
+        $statement = $this->connection->prepare("UPDATE tokens SET expires_on=:date WHERE token=:token");
+        $statement->execute([":date" => $date, ":token" => $token]);
     }
 }

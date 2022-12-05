@@ -13,17 +13,16 @@ use Sergo\PHP\Class\Users\Posts;
 use Sergo\PHP\Interfaces\HTTP\actionHTTP\InterfaceAction;
 use Sergo\PHP\Interfaces\Repository\InterfaceRepositoryPosts;
 use Sergo\PHP\Class\UUID\UUID;
-use Sergo\PHP\Interfaces\Authentification\InterfaceAuthentification;
+use Sergo\PHP\Interfaces\Authentification\InterfaceTokenAuthentification;
 
-class AddPost implements InterfaceAction {
+class AddPost implements InterfaceAction
+{
 
     public function __construct(
         private  InterfaceRepositoryPosts $repository,
-        private InterfaceAuthentification $Authentification,
+        private InterfaceTokenAuthentification $Authentification,
         private LoggerInterface $logger
-    )
-    {
-        
+    ) {
     }
 
     public function handle(Request $request): Response
@@ -45,7 +44,6 @@ class AddPost implements InterfaceAction {
                 trim($request->jsonBodyField('title')),
                 trim($request->jsonBodyField('text'))
             );
-
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }

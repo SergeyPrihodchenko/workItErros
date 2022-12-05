@@ -15,6 +15,7 @@ use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUUIDComment;
 use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUUIDInLikes;
 use Sergo\PHP\Class\HTTP\actionHTTP\Find\FindByUUIDinPosts;
 use Sergo\PHP\Class\HTTP\actionHTTP\Token\LogIn;
+use Sergo\PHP\Class\HTTP\actionHTTP\Token\Logout;
 use Sergo\PHP\Class\HTTP\Request\Request;
 use Sergo\PHP\Class\HTTP\Response\ErrorResponse;
 
@@ -29,8 +30,7 @@ $request = new Request(
 );
 try {
     $path = $request->path();
-
-} catch (HttpException) {
+} catch (HttpException $e) {
     $logger->warning($e->getMessage());
     (new ErrorResponse)->send();
     return;
@@ -58,7 +58,8 @@ $routes = [
         '/posts/create' => AddPost::class,
         '/user/create' => AddUser::class,
         '/posts/like' => AddLike::class,
-        '/login' => LogIn::class
+        '/login' => LogIn::class,
+        '/logout' => Logout::class,
     ],
     'DELETE' => [
         '/posts/delete' => DeletePostByUuid::class,
@@ -68,14 +69,14 @@ $routes = [
     ]
 ];
 
-if(!array_key_exists($method, $routes)) {
+if (!array_key_exists($method, $routes)) {
     $logger->notice("Route not found: $method $path");
     (new ErrorResponse("Route not found: $method $path"))->send();
     return;
 }
 
-if(!array_key_exists($path, $routes[$method])) {
-    $logger->notice("Route not found: $method $path");  
+if (!array_key_exists($path, $routes[$method])) {
+    $logger->notice("Route not found: $method $path");
     (new ErrorResponse("route not fond: $method $path"))->send();
     return;
 }
@@ -86,7 +87,6 @@ $action = $container->get($actionClassName);
 
 try {
     $response = $action->handle($request);
-
 } catch (HttpException $e) {
     $logger->error($e->getMessage());
     (new ErrorResponse($e->getMessage()))->send();
